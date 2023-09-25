@@ -26,29 +26,34 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ( $employees as $index => $employees)
+            @foreach ($employees as $index => $employee)
             <tr>
                 <th scope="row">{{ $index + 1 }}</th>
-                <td>{{ $employees->name }}</td>
-                <td>{{ $employees->email }}</td>
-                <td>{{ $employees->address }}</td>
-                <td>{{ $employees->career }}</td>
-
+                <td>{{ $employee->name }}</td>
+                <td>{{ $employee->email }}</td>
+                <td>
+                    @if ($employee->address)
+                        {{ $employee->address }}
+                    @else
+                        N/A
+                    @endif
+                </td>
+                <td>{{ $employee->career }}</td>
                 <td class="d-flex justify-content-between">
-
-                    <a href="{{ route('employee.edit', $employees->id) }}" class="btn btn-primary">
-                    <i class="bi bi-pencil"></i> Edit
+                    <a href="{{ route('employee.edit', $employee->id) }}" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit
                     </a>
-
-                    <form action="{{route('employee.destroy',$employees->id)}}" method="post">
+                    <form action="{{ route('employee.destroy', $employee->id) }}" method="post">
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">
-                         <i class="bi bi-trash"></i> Delete
-            </td>
-
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?')">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
-            @endforeach
+        @endforeach
+
         </tbody>
     </table>
 

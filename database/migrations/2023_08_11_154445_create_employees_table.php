@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('address')->nullable();
+            $table->string('address');
             $table->string('career');
-
             $table->foreignId('leave_type_id')
             ->nullable() // Allow null values
             ->default(null) // Set default value to null

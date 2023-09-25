@@ -1,4 +1,4 @@
-@extends('Dashborad.dashborad')
+@extends('Layouts.Master')
 @section('content')
 <div class="container">
     <div class="row">
@@ -7,6 +7,12 @@
         </div>
     </div>
     <div class="row">
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
         <div class="col-md-6">
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -18,40 +24,36 @@
                 </div>
             @endif
 
+            <form action="{{ route('leave_requests.store') }}" method="POST" class="my-form">
+                @csrf
 
-    <form action="{{ route('leave_requests.store') }}" method="POST">
-        @csrf
+                <label for="employee_id">Employee</label>
 
-        <label for="employee_id">Employee</label>
-
-        <select name="employee_id" id="employee_id">
-            @foreach ($employees as $employee)
-            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-        @endforeach
-    </select><br>
-
-        </select><br>
+                <select name="employee_id" id="employee_id" class="form-control">
+                    <option value="" disabled selected>Select an employee</option> <!-- Placeholder -->
+                    @foreach ($employees as $employee)
+                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                    @endforeach
+                </select><br>
 
 
+                <label for="leave_type_id">Leave Type</label>
+                <select name="leave_type_id" id="leave_type_id" class="form-control">
+                    <option value="" disabled selected>Select a LeaveType</option> <!-- Placeholder -->
+                    @foreach ($leaveTypes as $leaveType)
+                        <option value="{{ $leaveType->id }}">{{ $leaveType->name }}</option>
+                    @endforeach
+                </select><br>
 
-        <label for="leave_type_id">Leave Type</label>
+                <label for="start_date">Start date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control"><br>
 
-        <select name="leave_type_id" id="leave_type_id">
-            @foreach ($leaveTypes as $leaveType)
-            <option value="{{ $leaveType->id }}">{{ $leaveType->name }}</option>
-        @endforeach
-        </select><br>
+                <label for="end_date">End date</label>
+                <input type="date" name="end_date" id="end_date" class="form-control"><br>
 
-        <label for="start_date">Start date</label>
-        <input type="date" name="start_date" id="start_date"><br>
-
-
-        <label for="end_date">End date</label>
-        <input type="date" name="end_date" id="end_date"><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</div>
-</div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection

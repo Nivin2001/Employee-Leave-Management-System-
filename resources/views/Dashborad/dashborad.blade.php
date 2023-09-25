@@ -32,7 +32,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Employee System </div>
             </a>
 
             <!-- Divider -->
@@ -124,10 +124,43 @@
 
                         <a class="collapse-item" href="{{ route('employee.index') }}">Show All</a>
                         <a class="collapse-item" href="{{ route('employee.create') }}">Add Employee</a>
+                         {{-- <a class="collapse-item" href="{{ route('leave_requests.create') }}">Submit Leave Request</a> --}}
 
                     </div>
                 </div>
             </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Leave Requests</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="{{ route('leave_requests.index') }}">Show All</a>
+
+                    </div>
+                </div>
+            </li>
+
+{{--
+          <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Leave Status</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="{{ route(') }}">Show All</a>
+
+                    </div>
+                </div>
+            </li> --}}
 
 
             <li class="nav-item">
@@ -209,6 +242,8 @@
                             </div>
                         </div>
                     </form>
+                    {{ Auth::user()->name}}
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -236,6 +271,8 @@
                                 </form>
                             </div>
                         </li>
+
+
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -488,6 +525,8 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('assets/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('assets/ js/jquery-3.6.0.min.js') }}"></script>
+</head>
 
 
     @yield('script')

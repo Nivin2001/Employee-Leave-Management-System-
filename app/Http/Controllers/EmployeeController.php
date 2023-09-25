@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\employee;
 use App\Models\LeaveType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     *
      */
+
+
+
+
     public function index(request $request)
     {
         //

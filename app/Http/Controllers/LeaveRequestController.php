@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\employee;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
-use Illuminate\Http\Request;
+
+
 
 class LeaveRequestController extends Controller
 {
     //
 
     public function index(request $request)
+
 {
-    // $leaveRequests = LeaveRequest::with(['Employee', 'LeaveType'])->get();
+    // $leaveRequests = LeaveRequest::with('employee', 'leaveType')->get();
+
     $leaveRequests = LeaveRequest::all();
     //retrive all leave request records
     return view('LeaveRequest.index',compact('leaveRequests'));
@@ -37,31 +42,60 @@ public function store(Request $request)
     ]);
 
    LeaveRequest::create($request->all());
-  return redirect()->route('leave_requests.index')
-  ->with('success', 'تم تقديم طلب الإجازة بنجاح.');
+
+   return redirect()->route('leave_requests.create')
+  ->with('success', 'The leave request has been submitted successfully.');
+
+
+
+//   return redirect()->route('leave_requests.index')
+//   ->with('success', 'The leave request has been submitted successfully.');
 
 }
 
 
 
+public function approveLeaveRequest($id)
+{
+    $leaveRequest = LeaveRequest::findOrFail($id);
+    $leaveRequest->status = 'approved';
+    $leaveRequest->save();
 
-    public function approve(Request $request, $id)
-    {
-        $leaveRequest = LeaveRequest::findOrFail($id);
-        $leaveRequest->status = 'approved';
-        $leaveRequest->approval_reason = $request->input('approval_reason');
-        $leaveRequest->save();
-
-        return redirect()->route('leave-requests.index')->with('success', 'The request was approved successfully.');
-    }
-
-    public function reject(Request $request, $id)
-    {
-        $leaveRequest = LeaveRequest::findOrFail($id);
-        $leaveRequest->status = 'rejected';
-        $leaveRequest->approval_reason = $request->input('approval_reason');
-        $leaveRequest->save();
-
-        return redirect()->route('leave-requests.index')->with('error', 'reques has been rejected.');
-    }
+    return redirect()->back()->with('success', 'Leave request approved successfully.');
 }
+
+// public function deny(Request $request, $id)
+// {
+//     $leaveRequest = LeaveRequest::findOrFail($id);
+//     $leaveRequest->status = 'denied';
+//     $leaveRequest->approval_reason = $request->input('approval_reason');
+//     $leaveRequest->save();
+
+//     return response()->json(['message' => 'Leave request denied.']);
+// }
+// Example logic in a controller method
+
+public function deny(Request $request, $id) {
+    $leaveRequest = LeaveRequest::findOrFail($id);
+
+    $leaveRequest->status = 'rejected';
+    $leaveRequest->approval_reason = $request->input('approval_reason');
+
+    $leaveRequest->save();
+
+    return redirect()->back()->with('success', 'Leave request denied successfully.');
+}
+
+
+
+
+
+// public function show(Request $request, LeaveRequest $leaveRequest)
+// {
+
+//     return view('LeaveStatus.showStatus', ['leaveRequest' => $leaveRequest]);
+// }
+
+
+}
+

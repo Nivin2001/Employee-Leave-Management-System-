@@ -34,7 +34,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); //موافق مرفوص معلق
-            $table->text('approval_reason')->nullable();// سبب الرفض 
+            $table->text('approval_reason');// سبب الرفض
             $table->timestamps();
         });
     }
